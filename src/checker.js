@@ -1,3 +1,5 @@
+import mime from './mime';
+
 function check(header) {
     for (let i in mime) {
         let arr = mime[i].h.split(',');
@@ -13,18 +15,24 @@ function check(header) {
 }
 
 function check(file, callback) {
-    let blob = file.slice(0, 128); //仅获取前128字节。
-    let reader = new FileReader();
-    reader.onloadend = function (e) {
-        let arr = (new Uint8Array(e.target.result)).subarray(0, 200);
-        let header = "";
-        for (let i = 0; i < arr.length; i++) {
-            header += arr[i].toString(16);
+    return new Promise((resolve, reject) => {
+        let blob = file.slice(0, 128); //仅获取前128字节。
+        let reader = new FileReader();
+        reader.onloadend = function (e) {
+            let arr = (new Uint8Array(e.target.result)).subarray(0, 200);
+            let header = "";
+            for (let i = 0; i < arr.length; i++) {
+                header += arr[i].toString(16);
+            }
+            let type = check(header);
+            resolve(type);
         }
-        let type = check(header);
-        callback(type);
-    }
-    reader.readAsArrayBuffer(blob);
+        reader.onerror = function (e) {
+            reject(e);
+        }
+        reader.readAsArrayBuffer(blob);
+    })
+
 }
 
 export default check;
