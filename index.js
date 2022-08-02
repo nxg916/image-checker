@@ -1,2 +1,2 @@
-import check from './src/checker';
-export { check }
+import loadmime from './lib/checker';
+export { loadmime }
