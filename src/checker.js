@@ -14,7 +14,7 @@ function check(header) {
     return 'unknown';
 }
 
-function loadmime(file, callback) {
+function loadmime(file) {
     return new Promise((resolve, reject) => {
         let blob = file.slice(0, 128); //仅获取前128字节。
         let reader = new FileReader();
