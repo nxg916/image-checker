@@ -1,0 +1,13 @@
+// 把 ES6 的代码编译为 ES5
+{
+    "presets": [
+        "@babel/preset-env"
+    ],
+    "plugins": [
+        ["@babel/plugin-proposal-class-properties",
+            {
+                "loose": true
+            }
+        ]
+      ]
+}
